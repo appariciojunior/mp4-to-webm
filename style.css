@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+:root {
+  --background: oklch(0.9232 0.0026 48.7171);
+  --foreground: oklch(0.2795 0.0368 260.0310);
+  --card: oklch(0.9699 0.0013 106.4238);
+  --card-foreground: oklch(0.2795 0.0368 260.0310);
+  --primary: oklch(0.5854 0.2041 277.1173);
+  --primary-foreground: oklch(1.0000 0 0);
+  --secondary: oklch(0.8687 0.0043 56.3660);
+  --secondary-foreground: oklch(0.4461 0.0263 256.8018);
+  --muted: oklch(0.9232 0.0026 48.7171);
+  --muted-foreground: oklch(0.5510 0.0234 264.3637);
+  --accent: oklch(0.9376 0.0260 321.9388);
+  --accent-foreground: oklch(0.3729 0.0306 259.7328);
+  --destructive: oklch(0.6368 0.2078 25.3313);
+  --destructive-foreground: oklch(1.0000 0 0);
+  --border: oklch(0.8687 0.0043 56.3660);
+  --input: oklch(0.8687 0.0043 56.3660);
+  --ring: oklch(0.5854 0.2041 277.1173);
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --radius: 1.25rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-sans);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* Claymorphism card style */
+.clay-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow:
+    8px 8px 16px 0 rgba(163, 160, 154, 0.25),
+    -4px -4px 12px 0 rgba(255, 255, 255, 0.7),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Claymorphism button */
+.clay-btn {
+  border-radius: calc(var(--radius) - 2px);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.625rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  box-shadow:
+    4px 4px 10px 0 rgba(163, 160, 154, 0.2),
+    -2px -2px 8px 0 rgba(255, 255, 255, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.clay-btn:active {
+  transform: scale(0.97);
+  box-shadow:
+    2px 2px 6px 0 rgba(163, 160, 154, 0.2),
+    -1px -1px 4px 0 rgba(255, 255, 255, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.clay-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.clay-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.clay-btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.clay-btn-secondary:hover {
+  opacity: 0.85;
+}
+
+/* Dropzone clay style */
+.clay-dropzone {
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow:
+    6px 6px 14px 0 rgba(163, 160, 154, 0.2),
+    -3px -3px 10px 0 rgba(255, 255, 255, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+.clay-dropzone:hover,
+.clay-dropzone.dragover {
+  border-color: var(--primary);
+  background: color-mix(in oklch, var(--primary) 5%, var(--card));
+}
+
+/* Progress bar */
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--secondary);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+progress::-webkit-progress-value {
+  background: var(--primary);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+progress::-moz-progress-bar {
+  background: var(--primary);
+  border-radius: 999px;
+}

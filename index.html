@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MP4 to WebM Converter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="coi-serviceworker.js"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center font-sans antialiased">
+
+  <div id="app" class="max-w-md w-full px-5 py-10">
+
+    <!-- Title -->
+    <h1 class="text-2xl font-bold tracking-tight text-center mb-6">
+      MP4 <span class="text-primary">→</span> WebM
+    </h1>
+
+    <!-- State: idle -->
+    <div id="dropzone" class="clay-dropzone py-14 px-8 text-center">
+      <div class="flex flex-col items-center gap-4 text-muted-foreground">
+        <svg class="w-10 h-10 opacity-40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <p class="text-sm">Drop an MP4 file here, or <span class="text-primary underline cursor-pointer font-medium">click to select</span></p>
+        <div class="text-xs opacity-50 leading-relaxed max-w-xs">
+          <p>Your file is converted entirely in your browser using WebAssembly — nothing is uploaded to any server.</p>
+          <p class="mt-1">This may take a bit longer than server-based tools, but your files stay completely private.</p>
+        </div>
+      </div>
+      <input type="file" id="file-input" accept="video/mp4,.mp4" hidden>
+    </div>
+
+    <!-- State: file selected -->
+    <div id="file-info" hidden>
+      <div class="clay-card p-6 text-center">
+        <p class="text-base font-semibold text-card-foreground break-all" id="filename"></p>
+        <p class="text-sm text-muted-foreground mt-1 mb-5" id="filesize"></p>
+        <div class="flex gap-3 justify-center">
+          <button id="convert-btn" class="clay-btn clay-btn-primary">Convert to WebM</button>
+          <button id="change-btn" class="clay-btn clay-btn-secondary">Change file</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- State: converting -->
+    <div id="progress-section" hidden>
+      <div class="clay-card p-6 text-center">
+        <p id="status-text" class="text-sm font-medium text-foreground mb-3">Loading converter...</p>
+        <progress id="progress-bar" max="100" value="0" class="w-full"></progress>
+        <p id="progress-text" class="text-xs text-muted-foreground mt-2"></p>
+        <button id="cancel-btn" class="clay-btn clay-btn-secondary mt-4">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Confirm cancel dialog -->
+    <div id="confirm-dialog" hidden>
+      <div class="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+        <div class="clay-card p-6 text-center max-w-xs mx-4">
+          <p class="text-sm font-semibold text-foreground mb-1">Cancel conversion?</p>
+          <p class="text-xs text-muted-foreground mb-5">This will stop the current conversion and discard all progress.</p>
+          <div class="flex gap-3 justify-center">
+            <button id="confirm-cancel-btn" class="clay-btn clay-btn-primary !bg-destructive">Yes, cancel</button>
+            <button id="resume-btn" class="clay-btn clay-btn-secondary">Keep going</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- State: done -->
+    <div id="done-section" hidden>
+      <div class="clay-card p-6 text-center">
+        <p class="text-base font-semibold text-primary mb-1">Conversion complete!</p>
+        <p class="text-xs text-muted-foreground mb-4" id="size-compare"></p>
+        <video id="preview" controls class="w-full max-h-64 rounded-lg bg-muted mb-4"></video>
+        <div class="flex gap-3 justify-center">
+          <button id="download-btn" class="clay-btn clay-btn-primary">Download WebM</button>
+          <button id="reset-btn" class="clay-btn clay-btn-secondary">Convert another</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error display -->
+    <p id="error" class="text-destructive text-sm mt-4 text-center" hidden></p>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
